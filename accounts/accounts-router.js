@@ -44,4 +44,15 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+router.delete("/:id", async (req, res) => {
+    try {
+        const count = await db('accounts')
+            .where({ id: req.params.id })
+            .del();
+        res.status(200).json(count);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating account." });
+    }
+});
+
 module.exports = router;
