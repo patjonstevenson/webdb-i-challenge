@@ -31,4 +31,17 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.put("/:id", async (req, res) => {
+    if (!req.body) { res.status(400).json({ message: "Missing information" }); }
+    try {
+        const count = await db
+            .where({ id: req.params.id })
+            .update(req.body)
+            .into('accounts');
+        res.status(200).json(count);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating account." });
+    }
+});
+
 module.exports = router;
